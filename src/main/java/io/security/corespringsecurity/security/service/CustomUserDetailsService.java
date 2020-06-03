@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = userRepository.findByUsername(username);
 
-        if(account == null) {
+        if (account == null) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
 

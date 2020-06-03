@@ -21,7 +21,7 @@ public class LoginController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if(auth != null) {
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
 

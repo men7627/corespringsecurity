@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.user;
+package io.security.corespringsecurity.controller.user;
 
 import io.security.corespringsecurity.domain.Account;
 import io.security.corespringsecurity.domain.AccountDto;

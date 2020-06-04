@@ -1,6 +1,8 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.common.AjaxLoginAuthenticationEntryPoint;
 import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
+import io.security.corespringsecurity.security.handler.AjaxAccessDeniedHandler;
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationFailureHandler;
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
@@ -26,6 +28,13 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
 
+    @Autowired
+    private AjaxLoginAuthenticationEntryPoint ajaxLoginAuthenticationEntryPoint;
+
+    @Autowired
+    private AjaxAccessDeniedHandler ajaxAccessDeniedHandler;
+
+
     @Bean
     public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
         AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
@@ -45,7 +54,12 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/api/**")
                 .authorizeRequests()
+                .antMatchers("/api/messages").hasRole("USER")
                 .anyRequest().authenticated()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(ajaxAccessDeniedHandler)
+                .authenticationEntryPoint(ajaxLoginAuthenticationEntryPoint)
                 .and()
                 .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
         ;

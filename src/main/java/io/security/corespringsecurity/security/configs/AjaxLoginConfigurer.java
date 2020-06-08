@@ -34,8 +34,12 @@ public class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>>
         return this;
     }
 
+    public AjaxLoginConfigurer<H> loginPage(String loginPage) {
+        return super.loginPage(loginPage);
+    }
+
     @Override
-    public void configure(H http) throws Exception {
+    public void configure(H http) {
         if (authenticationManager == null) {
             authenticationManager = http.getSharedObject(AuthenticationManager.class);
         }
